@@ -1,0 +1,1 @@
+This is a basic mod that shows each player their current location, such as their coordinates (x, y, z) and the biome they are located in, and the time of day in AM/PM format.
