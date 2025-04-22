@@ -61,7 +61,8 @@ public class ClientEvents {
             amOrPm = "AM";
         }
         int minute = (int) ((time % 1000) * 0.06);
-        String timeStr = String.format("%d:%02d %s", hour, minute, amOrPm);
+        int day = (int) (level.getDayTime() / 24_000);
+        String timeStr = String.format("%d:%02d %s (Day %d)", hour, minute, amOrPm, day);
         event.getGuiGraphics().drawString(font, timeStr, 10, 30, 0xFFAAAAAA, true);
     }
 }
