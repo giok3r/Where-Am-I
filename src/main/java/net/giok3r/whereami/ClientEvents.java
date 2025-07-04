@@ -11,6 +11,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
+import org.apache.commons.lang3.mutable.MutableInt;
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = WhereAmI.MODID)
 public class ClientEvents {
@@ -20,22 +21,40 @@ public class ClientEvents {
         if (player == null) {
             return;
         }
+
+        Font font = Minecraft.getInstance().font;
+        Level level = player.level();
+
+        MutableInt guiY = new MutableInt(10);
+
+        renderLocation(event, guiY, player, font);
+
+        renderBiome(event, guiY, level, player, font);
+
+        renderTimeAndDay(event, guiY, level, font);
+    }
+
+    private static void renderLocation(RenderGuiEvent.Post event, MutableInt guiY, LocalPlayer player, Font font) {
         int x = (int) player.position().x;
         int y = (int) player.position().y;
         int z = (int) player.position().z;
 
-        Font font = Minecraft.getInstance().font;
-        Component text = Component.literal(x + ", " + y + ", " + z);
-        event.getGuiGraphics().drawString(font, text, 10, 10, -1, true);
+        CompassDirection direction = CompassDirection.fromAngle(player.getYRot());
 
-        Level level = player.level();
+        Component text = Component.literal(x + ", " + y + ", " + z + " " + direction.name());
+        event.getGuiGraphics().drawString(font, text, 10, guiY.getAndAdd(10), -1, true);
+    }
+
+    private static void renderBiome(RenderGuiEvent.Post event, MutableInt guiY, Level level, LocalPlayer player, Font font) {
         Holder<Biome> biomeHolder = level.getBiome(player.blockPosition());
         if (biomeHolder.getKey() != null) {
             var biomeId = biomeHolder.getKey().location();
             Component biomeName = Component.translatable("biome." + biomeId.getNamespace() + "." + biomeId.getPath());
-            event.getGuiGraphics().drawString(font, biomeName, 10, 20, 0xFFCCCCCC, true);
+            event.getGuiGraphics().drawString(font, biomeName, 10, guiY.getAndAdd(10), 0xFFCCCCCC, true);
         }
+    }
 
+    private static void renderTimeAndDay(RenderGuiEvent.Post event, MutableInt guiY, Level level, Font font) {
         int time = (int) level.getDayTime() % 24_000;
         int hour;
         String amOrPm;
@@ -63,6 +82,6 @@ public class ClientEvents {
         int minute = (int) ((time % 1000) * 0.06);
         int day = (int) (level.getDayTime() / 24_000);
         String timeStr = String.format("%d:%02d %s (Day %d)", hour, minute, amOrPm, day);
-        event.getGuiGraphics().drawString(font, timeStr, 10, 30, 0xFFAAAAAA, true);
+        event.getGuiGraphics().drawString(font, timeStr, 10, guiY.getAndAdd(10), 0xFFAAAAAA, true);
     }
 }
