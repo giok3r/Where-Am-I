@@ -1,5 +1,7 @@
 {
-  "itemGroup.examplemod": "Example Mod Tab",
-  "block.examplemod.example_block": "Example Block",
-  "item.examplemod.example_item": "Example Item"
+  "whereami.configuration.biome": "Biome",
+  "whereami.configuration.direction": "Direction",
+  "whereami.configuration.display": "Display",
+  "whereami.configuration.location": "Location",
+  "whereami.configuration.time_and_day": "Time and Day"
 }

@@ -35,17 +35,31 @@ public class ClientEvents {
     }
 
     private static void renderLocation(RenderGuiEvent.Post event, MutableInt guiY, LocalPlayer player, Font font) {
+        if (!Config.displayLocation && !Config.displayDirection) {
+            return;
+        }
+
         int x = (int) player.position().x;
         int y = (int) player.position().y;
         int z = (int) player.position().z;
 
         CompassDirection direction = CompassDirection.fromAngle(player.getYRot());
 
-        Component text = Component.literal(x + ", " + y + ", " + z + " " + direction.name());
+        Component text;
+        if (Config.displayLocation) {
+            String directionSuffix = Config.displayDirection ? " " + direction.name() : "";
+            text = Component.literal(x + ", " + y + ", " + z + directionSuffix);
+        } else {
+            text = Component.literal(direction.name());
+        }
         event.getGuiGraphics().drawString(font, text, 10, guiY.getAndAdd(10), -1, true);
     }
 
     private static void renderBiome(RenderGuiEvent.Post event, MutableInt guiY, Level level, LocalPlayer player, Font font) {
+        if (!Config.displayBiome) {
+            return;
+        }
+
         Holder<Biome> biomeHolder = level.getBiome(player.blockPosition());
         if (biomeHolder.getKey() != null) {
             var biomeId = biomeHolder.getKey().location();
@@ -55,6 +69,10 @@ public class ClientEvents {
     }
 
     private static void renderTimeAndDay(RenderGuiEvent.Post event, MutableInt guiY, Level level, Font font) {
+        if (!Config.displayTimeAndDay) {
+            return;
+        }
+
         int time = (int) level.getDayTime() % 24_000;
         int hour;
         String amOrPm;
