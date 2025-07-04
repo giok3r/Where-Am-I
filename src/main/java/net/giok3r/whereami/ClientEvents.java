@@ -17,12 +17,17 @@ import org.apache.commons.lang3.mutable.MutableInt;
 public class ClientEvents {
     @SubscribeEvent
     public static void onRenderGui(RenderGuiEvent.Post event) {
-        LocalPlayer player = Minecraft.getInstance().player;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.getDebugOverlay().showDebugScreen()) {
+            return;
+        }
+
+        LocalPlayer player = mc.player;
         if (player == null) {
             return;
         }
 
-        Font font = Minecraft.getInstance().font;
+        Font font = mc.font;
         Level level = player.level();
 
         MutableInt guiY = new MutableInt(10);
