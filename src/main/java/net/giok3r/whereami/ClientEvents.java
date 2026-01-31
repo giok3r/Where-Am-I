@@ -67,7 +67,7 @@ public class ClientEvents {
 
         Holder<Biome> biomeHolder = level.getBiome(player.blockPosition());
         if (biomeHolder.getKey() != null) {
-            var biomeId = biomeHolder.getKey().location();
+            var biomeId = biomeHolder.getKey().identifier();
             Component biomeName = Component.translatable("biome." + biomeId.getNamespace() + "." + biomeId.getPath());
             event.getGuiGraphics().drawString(font, biomeName, 10, guiY.getAndAdd(10), 0xFFCCCCCC, true);
         }
