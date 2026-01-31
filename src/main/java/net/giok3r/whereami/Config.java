@@ -1,12 +1,5 @@
 package net.giok3r.whereami;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
@@ -29,7 +22,10 @@ public class Config {
             .define("display.biome", true);
     private static final ModConfigSpec.BooleanValue DISPLAY_TIME_AND_DAY = BUILDER
             .comment("Show the time and in-game day")
-            .define("display.time_and_day", true);
+            .define("display.time_and_day.enabled", true);
+    private static final ModConfigSpec.BooleanValue DISPLAY_TIME_AND_DAY_AS_24_HOUR = BUILDER
+            .comment("Show the time as a 24-hour clock instead of AM/PM")
+            .define("display.time_and_day.24_hour_clock", false);
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -37,6 +33,7 @@ public class Config {
     public static boolean displayDirection;
     public static boolean displayBiome;
     public static boolean displayTimeAndDay;
+    public static boolean displayTimeAndDayAs24Hour;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
@@ -44,5 +41,6 @@ public class Config {
         displayDirection = DISPLAY_DIRECTION.get();
         displayBiome = DISPLAY_BIOME.get();
         displayTimeAndDay = DISPLAY_TIME_AND_DAY.get();
+        displayTimeAndDayAs24Hour = DISPLAY_TIME_AND_DAY_AS_24_HOUR.get();
     }
 }

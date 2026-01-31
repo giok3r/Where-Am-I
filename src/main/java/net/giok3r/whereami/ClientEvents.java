@@ -79,19 +79,26 @@ public class ClientEvents {
         }
 
         int time = (int) level.getDayTime() % 24_000;
+        String timeStr = Config.displayTimeAndDayAs24Hour ? get24HourTimeString(time) : get12HourTimeString(time);
+        int day = (int) (level.getDayTime() / 24_000);
+        String timeAndDay = String.format("%s (Day %d)", timeStr, day);
+        event.getGuiGraphics().drawString(font, timeAndDay, 10, guiY.getAndAdd(10), 0xFFAAAAAA, true);
+    }
+
+    private static String get12HourTimeString(int timeOfDay) {
         int hour;
         String amOrPm;
-        if (time < 7000) {
+        if (timeOfDay < 7000) {
             // 6am-12pm
-            hour = time / 1000 + 6;
+            hour = timeOfDay / 1000 + 6;
             if (hour == 12) {
                 amOrPm = "PM";
             } else {
                 amOrPm = "AM";
             }
-        } else if (time < 19_000) {
+        } else if (timeOfDay < 19_000) {
             // 1pm-12am
-            hour = time / 1000 - 6;
+            hour = timeOfDay / 1000 - 6;
             if (hour == 12) {
                 amOrPm = "AM";
             } else {
@@ -99,12 +106,23 @@ public class ClientEvents {
             }
         } else {
             // 1am-5am
-            hour = time / 1000 - 18;
+            hour = timeOfDay / 1000 - 18;
             amOrPm = "AM";
         }
-        int minute = (int) ((time % 1000) * 0.06);
-        int day = (int) (level.getDayTime() / 24_000);
-        String timeStr = String.format("%d:%02d %s (Day %d)", hour, minute, amOrPm, day);
-        event.getGuiGraphics().drawString(font, timeStr, 10, guiY.getAndAdd(10), 0xFFAAAAAA, true);
+        int minute = (int) ((timeOfDay % 1000) * 0.06);
+        return String.format("%d:%02d %s", hour, minute, amOrPm);
+    }
+    
+    private static String get24HourTimeString(int timeOfDay) {
+        int hour;
+        if (timeOfDay < 18_000) {
+            // 6:00-23:59
+            hour = timeOfDay / 1000 + 6;
+        } else {
+            // 0:00-5:59
+            hour = timeOfDay / 1000 - 18;
+        }
+        int minute = (int) ((timeOfDay % 1000) * 0.06);
+        return String.format("%02d:%02d", hour, minute);
     }
 }

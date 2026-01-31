@@ -1,7 +1,9 @@
 {
+  "whereami.configuration.24_hour_clock": "24-Hour Clock",
   "whereami.configuration.biome": "Biome",
   "whereami.configuration.direction": "Direction",
   "whereami.configuration.display": "Display",
+  "whereami.configuration.enabled": "Enabled",
   "whereami.configuration.location": "Location",
   "whereami.configuration.time_and_day": "Time and Day"
 }
