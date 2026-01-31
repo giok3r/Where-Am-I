@@ -26,6 +26,9 @@ public class Config {
     private static final ModConfigSpec.BooleanValue DISPLAY_TIME_AND_DAY_AS_24_HOUR = BUILDER
             .comment("Show the time as a 24-hour clock instead of AM/PM")
             .define("display.time_and_day.24_hour_clock", false);
+    private static final ModConfigSpec.BooleanValue DISPLAY_TIME_AND_DAY_SUN_OR_MOON_ICON = BUILDER
+            .comment("Show a sun or moon icon before the time")
+            .define("display.time_and_day.sun_or_moon_icon", true);
 
     static final ModConfigSpec SPEC = BUILDER.build();
 
@@ -34,6 +37,7 @@ public class Config {
     public static boolean displayBiome;
     public static boolean displayTimeAndDay;
     public static boolean displayTimeAndDayAs24Hour;
+    public static boolean displayTimeAndDaySunOrMoonIcon;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
@@ -42,5 +46,6 @@ public class Config {
         displayBiome = DISPLAY_BIOME.get();
         displayTimeAndDay = DISPLAY_TIME_AND_DAY.get();
         displayTimeAndDayAs24Hour = DISPLAY_TIME_AND_DAY_AS_24_HOUR.get();
+        displayTimeAndDaySunOrMoonIcon = DISPLAY_TIME_AND_DAY_SUN_OR_MOON_ICON.get();
     }
 }

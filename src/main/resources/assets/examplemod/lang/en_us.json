@@ -5,5 +5,6 @@
   "whereami.configuration.display": "Display",
   "whereami.configuration.enabled": "Enabled",
   "whereami.configuration.location": "Location",
+  "whereami.configuration.su_or_moon_icon": "Sun or Moon Icon",
   "whereami.configuration.time_and_day": "Time and Day"
 }

@@ -79,10 +79,23 @@ public class ClientEvents {
         }
 
         int time = (int) level.getDayTime() % 24_000;
+        String timeIconStr = getTimeIcon(time);
         String timeStr = Config.displayTimeAndDayAs24Hour ? get24HourTimeString(time) : get12HourTimeString(time);
         int day = (int) (level.getDayTime() / 24_000);
-        String timeAndDay = String.format("%s (Day %d)", timeStr, day);
+        String timeAndDay = String.format("%s%s (Day %d)", timeIconStr, timeStr, day);
         event.getGuiGraphics().drawString(font, timeAndDay, 10, guiY.getAndAdd(10), 0xFFAAAAAA, true);
+    }
+
+    private static boolean isDaytime(int timeOfDay) {
+        return timeOfDay < 12_500;
+    }
+
+    private static String getTimeIcon(int timeOfDay) {
+        if (Config.displayTimeAndDaySunOrMoonIcon) {
+            // Sun or moon emoji plus a space
+            return (isDaytime(timeOfDay) ? "☀" : "☽") + " ";
+        }
+        return "";
     }
 
     private static String get12HourTimeString(int timeOfDay) {
