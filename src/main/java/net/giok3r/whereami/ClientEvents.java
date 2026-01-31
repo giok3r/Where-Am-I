@@ -44,9 +44,9 @@ public class ClientEvents {
             return;
         }
 
-        int x = (int) player.position().x;
-        int y = (int) player.position().y;
-        int z = (int) player.position().z;
+        int x = player.blockPosition().getX();
+        int y = player.blockPosition().getY();
+        int z = player.blockPosition().getZ();
 
         CompassDirection direction = CompassDirection.fromAngle(player.getYRot());
 
