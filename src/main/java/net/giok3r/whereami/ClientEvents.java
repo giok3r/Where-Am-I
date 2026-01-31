@@ -18,7 +18,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onRenderGui(RenderGuiEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.getDebugOverlay().showDebugScreen()) {
+        if (mc.getDebugOverlay().showDebugScreen() || mc.options.hideGui) {
             return;
         }
 

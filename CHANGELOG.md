@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A sun/moon emoji next to the time to indicate day/night. Can be disabled in the config.
 ### Fixed
 - Negative coordinates being off by one
+- Overlay not being hidden when F1 is pressed
 
 ## [1.21.11-1.0.2] - 2026-01-04
 - Updated to Minecraft 1.21.11

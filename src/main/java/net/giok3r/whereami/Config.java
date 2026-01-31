@@ -5,8 +5,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-// An example config class. This is not required, but it's a good idea to have one to keep your config organized.
-// Demonstrates how to use Neo's config APIs
 @EventBusSubscriber(modid = WhereAmI.MODID)
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
@@ -27,7 +25,7 @@ public class Config {
             .comment("Show the time as a 24-hour clock instead of AM/PM")
             .define("display.time_and_day.24_hour_clock", false);
     private static final ModConfigSpec.BooleanValue DISPLAY_TIME_AND_DAY_SUN_OR_MOON_ICON = BUILDER
-            .comment("Show a sun or moon icon before the time")
+            .comment("Show a sun/moon icon before the time to indicate daytime or nighttime")
             .define("display.time_and_day.sun_or_moon_icon", true);
 
     static final ModConfigSpec SPEC = BUILDER.build();
