@@ -57,7 +57,7 @@ public class ClientEvents {
         } else {
             text = Component.literal(direction.name());
         }
-        event.getGuiGraphics().drawString(font, text, 10, guiY.getAndAdd(10), -1, true);
+        event.getGuiGraphics().text(font, text, 10, guiY.getAndAdd(10), -1, true);
     }
 
     private static void renderBiome(RenderGuiEvent.Post event, MutableInt guiY, Level level, LocalPlayer player, Font font) {
@@ -69,7 +69,7 @@ public class ClientEvents {
         if (biomeHolder.getKey() != null) {
             var biomeId = biomeHolder.getKey().identifier();
             Component biomeName = Component.translatable("biome." + biomeId.getNamespace() + "." + biomeId.getPath());
-            event.getGuiGraphics().drawString(font, biomeName, 10, guiY.getAndAdd(10), 0xFFCCCCCC, true);
+            event.getGuiGraphics().text(font, biomeName, 10, guiY.getAndAdd(10), 0xFFCCCCCC, true);
         }
     }
 
@@ -78,12 +78,12 @@ public class ClientEvents {
             return;
         }
 
-        int time = (int) level.getDayTime() % 24_000;
+        int time = (int) level.getOverworldClockTime() % 24_000;
         String timeIconStr = getTimeIcon(time);
         String timeStr = Config.displayTimeAndDayAs24Hour ? get24HourTimeString(time) : get12HourTimeString(time);
-        int day = (int) (level.getDayTime() / 24_000);
+        int day = (int) (level.getOverworldClockTime() / 24_000);
         String timeAndDay = String.format("%s%s (Day %d)", timeIconStr, timeStr, day);
-        event.getGuiGraphics().drawString(font, timeAndDay, 10, guiY.getAndAdd(10), 0xFFAAAAAA, true);
+        event.getGuiGraphics().text(font, timeAndDay, 10, guiY.getAndAdd(10), 0xFFAAAAAA, true);
     }
 
     private static boolean isDaytime(int timeOfDay) {
